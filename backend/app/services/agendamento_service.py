@@ -37,7 +37,8 @@ def listar_agendamentos(db: Session):
     return db.query(Agendamento).all()
 
 def cancelar_agendamento(db: Session, agendamento_id: int):
-    agendamento = db.get(Agendamento, agendamento_id)
+    agendamento = db.query(Agendamento).filter(
+    Agendamento.id == agendamento_id).first()
 
     # Regra 3: Agendamento deve existir
     if not agendamento:

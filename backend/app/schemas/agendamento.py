@@ -1,4 +1,4 @@
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 
 class AgendamentoBase(BaseModel):
@@ -10,8 +10,6 @@ class AgendamentoCreate(AgendamentoBase):
     pass
 
 class AgendamentoResponse(AgendamentoBase):
+    model_config = ConfigDict(from_attributes=True)
     id: int
     status: str
-
-    class Config:
-        from_attributes = True
