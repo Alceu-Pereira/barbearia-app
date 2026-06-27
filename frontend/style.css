@@ -1,0 +1,172 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+header {
+    background-color: #1a1a2e;
+    color: white;
+    text-align: center;
+    padding: 24px;
+}
+
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 4px;
+}
+
+header p {
+    color: #a0a0b0;
+    font-size: 0.9rem;
+}
+
+main {
+    max-width: 800px;
+    margin: 32px auto;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #1a1a2e;
+    border-bottom: 2px solid #f0f2f5;
+    padding-bottom: 12px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+
+.campo label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.campo select,
+.campo input {
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #333;
+    background-color: #fafafa;
+}
+
+.campo select:focus,
+.campo input:focus {
+    outline: none;
+    border-color: #1a1a2e;
+    background-color: white;
+}
+
+button {
+    width: 100px;
+    padding: 12px;
+    background-color: #1a1a2e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+button:hover {
+    background-color: #2d2d4e;
+}
+
+#mensagem-feedback {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    display: none;
+}
+
+#mensagem-feedback.sucesso {
+    background-color: #d4edda;
+    color: #155724;
+    display: block;
+}
+
+#mensagem-feedback.erro {
+    background-color: #f8d7da;
+    color: #721c24;
+    display: block;
+}
+
+.agendamento-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    margin-bottom: 10px;
+}
+
+.agendamento-info p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 4px;
+}
+
+.agendamento-info strong {
+    color: #1a1a2e;
+}
+
+.status {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status.confirmado {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.btn-cancelar {
+    width: auto;
+    padding: 6px 14px;
+    background-color: #dc3545;
+    font-size: 0.85rem;
+    margin-top: 0;
+    margin-left: 10px;
+}
+
+.btn-cancelar:hover {
+    background-color: #c82333;
+}
+
+.vazio {
+    text-align: center;
+    color: #999;
+    padding: 20px;
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbearia - Agendamentos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>✂️ Barbearia</h1>
+        <p>Sistema de Agendamentos</p>
+    </header>
+    
+    <main>
+        <!-- Formulário de Agendamento -->
+         <section class="card" id="secao-formulario">
+            <h2>Novo Agendamento</h2>
+
+            <div class="campo">
+                <label>Barbeiro</label>
+                <select id="barbeiro_id">
+                    <option value="1">João Silva - Corte e Barba</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label>Cliente</label>
+                <select id="cliente_id">
+                    <option value="1">Carlos Souza</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label>Data e Hora</label>
+                <input type="datetime-local" id="data_hora">
+            </div>
+
+            <button id="btn-agendar">Agendar</button>
+
+            <p id="mensagem-feedback"></p>
+         </section>
+
+         <!-- Lista de Agendamentos -->
+          <section class="card" id="secao-lista">
+            <h2>Agendamentos</h2>
+            <div id="lista-agendamentos">
+                <p>Carregando...</p>
+            </div>
+          </section>
+    </main>
+    
+    <script src="app.js"></script>
+</body>
+</html>

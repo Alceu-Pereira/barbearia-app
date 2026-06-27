@@ -6,7 +6,7 @@ from backend.app.schemas.agendamento import AgendamentoCreate
 def criar_agendamento(db: Session, dados: AgendamentoCreate):
     
     # Regra 1: Não pode agendar em horário passado
-    if dados.data_hora < datetime.now():
+    if dados.data_hora.replace(tzinfo=None) < datetime.now():
         raise ValueError("Não é possível agendar em um horário que já passou.")
     
     # Regra 2: Não pode agendar no mesmo horário com o mesmo barbeiro
