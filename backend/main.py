@@ -14,7 +14,11 @@ app.include_router(agendamento_routes.router)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://127.0.0.1:5500",
+        "http://localhost:5500",
+        "https://barbearia-app-tau.vercel.app"
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )
