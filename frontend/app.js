@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:8000"
+const API_URL = "https://barbearia-app-lrnx.onrender.com"
 
 // ─── LISTAR AGENDAMENTOS ───────────────────────────────────────
 async function listarAgendamentos() {
