@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from backend.app.database import engine, Base
 from backend.app.models import barbeiro, cliente, agendamentos, usuario
-from backend.app.routes import agendamento_routes, auth_routes
+from backend.app.routes import agendamento_routes, auth_routes, barbeiro_routes, cliente_routes
 from backend.app.logger import logger
 
 # Cria todas as tabelas no banco de dados automaticamente
@@ -12,6 +12,8 @@ app = FastAPI()
 
 app.include_router(agendamento_routes.router)
 app.include_router(auth_routes.router)
+app.include_router(barbeiro_routes.router)
+app.include_router(cliente_routes.router)
 
 app.add_middleware(
     CORSMiddleware,
