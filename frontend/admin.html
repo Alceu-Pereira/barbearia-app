@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbearia - Painel Admin</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <!-- Tela de Login -->
+     <div id="tela-login" style="display:flex">
+
+        <div class="login-card">
+
+            <h1>✂️ Barbearia</h1>
+            <p>Painel Administrativo</p>
+
+            <div class="campo">
+                <label>Email</label>
+                <input type="email" id="login-email" placeholder="seu@email.com">
+            </div>
+
+            <div class="campo">
+                <label>Senha</label>
+                <input type="password" id="login-senha" placeholder="••••••••">
+            </div>
+
+            <button id="btn-login">Entrar</button>
+
+            <p id="login-erro"></p>
+        </div>
+     </div>
+
+     <!-- Painel Admin -->
+     <div id="painel" style="display:none">
+
+        <header>
+            <h1>✂️ Barbearia - Admin</h1>
+            <button id="btn-logout">
+                Sair
+            </button>
+        </header>
+
+        <main>
+
+            <!-- Agendamentos do Dia -->
+             <section class="card">
+                <h2>📅 Agendamentos de Hoje</h2>
+                <div id="lista-agendamentos-hoje"></div>
+             </section>
+
+             <!-- Gerenciar Barbeiros -->
+              <section class="card">
+                <h2>💈 Barbeiros</h2>
+
+                <div class="form-inline">
+                    <input type="text" id="barbeiro-nome" placeholder="Nome">
+                    <input type="text" id="barbeiro-especialidade" placeholder="Especialidade">
+                    <button id="btn-criar-barbeiro">Adicionar</button>
+                </div>
+
+                <div id="lista-barbeiros"></div>
+              </section>
+
+              <!-- Gerenciar Clientes -->
+               <section class="card">
+                    <h2>👤 Clientes</h2>
+
+                    <div class="form-inline">
+                        <input type="text" id="cliente-nome" placeholder="Nome">
+                        <input type="text" id="cliente-telefone" placeholder="Telefone">
+                        <button id="btn-criar-cliente">Adicionar</button>
+
+                        <div id="lista-clientes"></div>
+                    </div>
+               </section>
+
+        </main>
+
+     </div>
+
+     <script src="admin.js"></script>
+</body>
+</html>
