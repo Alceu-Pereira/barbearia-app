@@ -10,7 +10,7 @@ import os
 load_dotenv()
 
 # Configuração do hash da senha
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto", bcrypt__rounds=12)
 
 # Configuração do JWT
 SECRET_KEY = os.getenv("SECRET_KEY")

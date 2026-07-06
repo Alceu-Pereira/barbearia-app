@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from backend.app.database import SessionLocal
-from backend.app.schemas.cliente import ClienteCreate, ClienteUpdate, ClienteResponse
+from backend.app.schemas.cliente import ClienteCreate, ClienteUpdate, ClienteResponse, ClienteRegistro, ClienteToken
 from backend.app.services import cliente_service
 from backend.app.services.seguranca import usuario_atual
 from backend.app.models.usuario import Usuario
@@ -19,6 +20,38 @@ def get_db():
     finally:
         db.close()
 
+@router.post("/registro", response_model=ClienteResponse)
+def registrar_cliente(dados: ClienteRegistro, db: Session = Depends(get_db)):
+    try:
+        return cliente_service.registrar_cliente(db, dados)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@router.post("/login", response_model=ClienteToken)
+def login_cliente(form: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    cliente = cliente_service.autenticar_cliente(db, form.username, form.password)
+
+    if not cliente:
+        raise HTTPException(status_code=401, detail="Email ou senha incorretos.")
+    
+    token = cliente_service.criar_token_cliente(cliente.id, cliente.email)
+
+    return {
+        "access_token": token,
+        "token_type": "bearer",
+        "cliente_id": cliente.id,
+        "nome": cliente.nome,
+    }
+
+
+@router.get("/meus-agendamentos/{cliente_id}")
+def meus_agendamentos(cliente_id: int, db: Session = Depends(get_db)):
+    from backend.app.models.agendamentos import Agendamento
+    agendamentos = db.query(Agendamento).filter(
+        Agendamento.cliente_id == cliente_id
+    ).all()
+
+    return agendamentos
 
 @router.post("/", response_model=ClienteResponse)
 def criar_cliente(
@@ -68,3 +101,5 @@ def deletar_cliente(
         return cliente_service.deletar_cliente(db, cliente_id)
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
+    
+

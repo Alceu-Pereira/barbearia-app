@@ -1,4 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, EmailStr
+from typing import Optional
 
 class ClienteBase(BaseModel):
     nome: str
@@ -11,8 +12,29 @@ class ClienteUpdate(BaseModel):
     nome: str | None = None
     telfone: str | None = None
 
+
+class ClienteRegistro(BaseModel):
+    nome: str
+    telefone: str
+    email: EmailStr
+    senha: str
+
+class ClienteLogin(BaseModel):
+    email: EmailStr
+    senha: str
+
+
 class ClienteResponse(ClienteBase):
     model_config = ConfigDict(from_attributes=True)
 
     id: int
+    email: Optional[str] = None
+    ativo: bool
+
+class ClienteToken(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    cliente_id: int
+    nome: str
+
     

@@ -1,0 +1,265 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+/* ─── AUTH ───────────────────────────────────────── */
+#tela-auth {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1a1a2e;
+}
+
+.auth-card {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+.auth-card h1 {
+    font-size: 2rem;
+    color: #1a1a2e;
+    margin-bottom: 4px;
+}
+
+.auth-card > p {
+    color: #888;
+    margin-bottom: 24px;
+    font-size: 0.9rem;
+}
+
+/* ─── ABAS ───────────────────────────────────────── */
+.abas {
+    display: flex;
+    margin-bottom: 24px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+}
+
+.aba {
+    flex: 1;
+    padding: 10px;
+    background: white;
+    color: #666;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    width: auto;
+}
+
+.aba.ativa {
+    background-color: #1a1a2e;
+    color: white;
+}
+
+/* ─── CAMPOS ─────────────────────────────────────── */
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+.campo label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+.campo input,
+.campo select {
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #333;
+    background-color: #fafafa;
+}
+
+.campo input:focus,
+.campo select:focus {
+    outline: none;
+    border-color: #1a1a2e;
+    background-color: white;
+}
+
+/* ─── BOTÕES ─────────────────────────────────────── */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #1a1a2e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+button:hover {
+    background-color: #2d2d4e;
+}
+
+/* ─── MENSAGENS ──────────────────────────────────── */
+#auth-erro {
+    color: #dc3545;
+    font-size: 0.85rem;
+    margin-top: 12px;
+    min-height: 20px;
+}
+
+#auth-sucesso {
+    color: #28a745;
+    font-size: 0.85rem;
+    margin-top: 12px;
+    min-height: 20px;
+}
+
+#agendamento-feedback {
+    margin-top: 12px;
+    font-size: 0.9rem;
+    min-height: 20px;
+}
+
+#agendamento-feedback.sucesso {
+    color: #28a745;
+}
+
+#agendamento-feedback.erro {
+    color: #dc3545;
+}
+
+/* ─── HEADER ─────────────────────────────────────── */
+header {
+    background-color: #1a1a2e;
+    color: white;
+    padding: 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 1.3rem;
+}
+
+header div {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+#nome-cliente {
+    font-size: 0.95rem;
+    color: #a0a0b0;
+}
+
+#btn-logout {
+    width: auto;
+    padding: 6px 16px;
+    background: transparent;
+    border: 1px solid white;
+    font-size: 0.9rem;
+    margin-top: 0;
+}
+
+/* ─── MAIN ───────────────────────────────────────── */
+main {
+    max-width: 700px;
+    margin: 32px auto;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: #1a1a2e;
+    border-bottom: 2px solid #f0f2f5;
+    padding-bottom: 12px;
+}
+
+/* ─── AGENDAMENTOS ───────────────────────────────── */
+.agendamento-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.agendamento-info strong {
+    color: #1a1a2e;
+}
+
+.agendamento-info p {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 4px;
+}
+
+.status {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status.confirmado {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status.cancelado {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.btn-cancelar {
+    width: auto;
+    padding: 6px 14px;
+    background-color: #dc3545;
+    font-size: 0.85rem;
+    margin-top: 0;
+    margin-left: 10px;
+}
+
+.btn-cancelar:hover {
+    background-color: #c82333;
+}
+
+.vazio {
+    text-align: center;
+    color: #999;
+    padding: 20px;
+    font-size: 0.9rem;
+}
