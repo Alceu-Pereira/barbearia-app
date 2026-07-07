@@ -5,7 +5,10 @@ from backend.app.models.barbeiro import Barbeiro
 from backend.app.models.cliente import Cliente
 from backend.app.schemas.agendamento import AgendamentoCreate
 from backend.app.logger import logger
-from backend.app.services.email_service import email_confirmacao_agendamento
+from backend.app.services.email_service import (
+    email_confirmacao_agendamento,
+    email_cancelamento_agendamento
+)
 import os
 
 
@@ -42,24 +45,21 @@ def criar_agendamento(db: Session, dados: AgendamentoCreate):
 
     logger.info(f"Agendamento criado com sucesso - id: {novo_agendamento.id}")
 
-    # Busca dados do barbeiro e cliente para o email
+    # Envia email de confirmação para o cliente
     try:
-        barbeiro = db.query(Barbeiro).filter(
-            Barbeiro.id == dados.barbeiro_id
-        ).first()
+        barbeiro = db.query(Barbeiro).filter(Barbeiro.id == dados.barbeiro_id).first()
+        cliente = db.query(Cliente).filter(Cliente.id == dados.cliente_id).first()
 
-        cliente = db.query(Cliente).filter(
-            Cliente.id == dados.cliente_id
-        ).first()
-
-        if barbeiro and cliente:
+        if barbeiro and cliente and cliente.email:
             data_formatada = dados.data_hora.strftime("%d/%m/%Y às %H:%M")
             email_confirmacao_agendamento(
-                destinatario=os.getenv("EMAIL_REMETENTE"),
+                destinatario=cliente.email,
                 nome_cliente=cliente.nome,
                 nome_barbeiro=barbeiro.nome,
                 data_hora=data_formatada
             )
+        else:
+            logger.warning(f"Email nao enviado - cliente sem email cadastrado: cliente_id {dados.cliente_id}")
     except Exception as e:
         logger.error(f"Erro ao enviar email de confirmacao: {str(e)}")
 
@@ -93,4 +93,23 @@ def cancelar_agendamento(db: Session, agendamento_id: int):
     db.refresh(agendamento)
 
     logger.info(f"Agendamento cancelado com sucesso - id: {agendamento_id}")
+
+    # Envia email de cancelamento para o cliente
+    try:
+        barbeiro = db.query(Barbeiro).filter(Barbeiro.id == agendamento.barbeiro_id).first()
+        cliente = db.query(Cliente).filter(Cliente.id == agendamento.cliente_id).first()
+
+        if barbeiro and cliente and cliente.email:
+            data_formatada = agendamento.data_hora.strftime("%d/%m/%Y às %H:%M")
+            email_cancelamento_agendamento(
+                destinatario=cliente.email,
+                nome_cliente=cliente.nome,
+                nome_barbeiro=barbeiro.nome,
+                data_hora=data_formatada
+            )
+        else:
+            logger.warning(f"Email nao enviado - cliente sem email cadastrado: cliente_id {agendamento.cliente_id}")
+    except Exception as e:
+        logger.error(f"Erro ao enviar email de cancelamento: {str(e)}")
+
     return agendamento
