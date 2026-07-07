@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from backend.app.database import Base
 
-class Agendamento(Base):
+class Agendamentos(Base):
     __tablename__ = "agendamentos"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -11,5 +11,6 @@ class Agendamento(Base):
     data_hora = Column(DateTime, nullable=False)
     status = Column(String, default="confirmado")
 
+    # Relationship faz com que barbeiro_id aponte para a tabela barbeiros e busque o "barbeiros.id"
     barbeiro = relationship("Barbeiro")
     cliente = relationship("Cliente")
