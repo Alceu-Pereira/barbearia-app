@@ -13,13 +13,14 @@ def verificar_lembretes():
     db = SessionLocal()
 
     try:
-        # Busca agendamentos confirmados que começam em 1 hora
         agora = datetime.now()
         em_uma_hora = agora + timedelta(hours=1)
 
-        # Janela de 1 minuto para não perder nem duplicar
-        inicio_janela = em_uma_hora - timedelta(minutes=1)
-        fim_janela = em_uma_hora + timedelta(minutes=1)
+        # Janela de 2 minutos para garantir que não perde
+        inicio_janela = em_uma_hora - timedelta(minutes=2)
+        fim_janela = em_uma_hora + timedelta(minutes=2)
+
+        logger.info(f"Janela de verificacao: {inicio_janela} ate {fim_janela}")
 
         agendamentos = db.query(Agendamento).filter(
             Agendamento.status == "confirmado",
@@ -27,11 +28,14 @@ def verificar_lembretes():
             Agendamento.data_hora <= fim_janela
         ).all()
 
+        logger.info(f"Agendamentos encontrados na janela: {len(agendamentos)}")
+
         if not agendamentos:
-            logger.info("Nenhum lembrete para enviar agora.")
             return
 
         for agendamento in agendamentos:
+            logger.info(f"Processando lembrete para agendamento id: {agendamento.id}, data_hora: {agendamento.data_hora}")
+
             barbeiro = db.query(Barbeiro).filter(
                 Barbeiro.id == agendamento.barbeiro_id
             ).first()
@@ -42,13 +46,18 @@ def verificar_lembretes():
 
             if barbeiro and cliente and cliente.email:
                 data_formatada = agendamento.data_hora.strftime("%d/%m/%Y às %H:%M")
-                email_lembrete_agendamento(
+                resultado = email_lembrete_agendamento(
                     destinatario=cliente.email,
                     nome_cliente=cliente.nome,
                     nome_barbeiro=barbeiro.nome,
                     data_hora=data_formatada
                 )
-                logger.info(f"Lembrete enviado para cliente_id: {cliente.id}")
+                if resultado:
+                    logger.info(f"Lembrete enviado com sucesso para: {cliente.email}")
+                else:
+                    logger.error(f"Falha ao enviar lembrete para: {cliente.email}")
+            else:
+                logger.warning(f"Cliente sem email - agendamento id: {agendamento.id}")
 
     except Exception as e:
         logger.error(f"Erro ao verificar lembretes: {str(e)}")

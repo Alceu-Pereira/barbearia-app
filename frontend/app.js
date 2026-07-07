@@ -193,9 +193,9 @@ async function criarAgendamento() {
     }
 
     const dados = {
-        barbeiro_id: parseInt(barbeiro_id),
-        cliente_id: parseInt(clienteId),
-        data_hora: new Date(data_hora).toISOString()
+    barbeiro_id: parseInt(barbeiro_id),
+    cliente_id: parseInt(clienteId),
+    data_hora: data_hora
     }
 
     try {
