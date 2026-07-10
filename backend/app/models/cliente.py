@@ -11,4 +11,3 @@ class Cliente(Base):
     email = Column(String, unique=True, nullable=True)
     senha_hash = Column(String, nullable=True)
     ativo = Column(Boolean, default=True)
-
