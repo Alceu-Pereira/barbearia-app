@@ -45,7 +45,7 @@ def atualizar_barbeiro(db: Session, barbeiro_id: int, dados: BarbeiroUpdate):
     barbeiro = buscar_barbeiro(db, barbeiro_id)
 
     if dados.nome is not None:
-        barbeiro.nome == dados.nome
+        barbeiro.nome = dados.nome
 
     if dados.especialidade is not None:
         barbeiro.especialidade = dados.especialidade
