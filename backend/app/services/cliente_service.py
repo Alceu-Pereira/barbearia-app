@@ -4,7 +4,7 @@ from backend.app.schemas.cliente import ClienteCreate, ClienteUpdate, ClienteReg
 from backend.app.logger import logger
 from passlib.context import CryptContext
 from jose import jwt
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, UTC
 from dotenv import load_dotenv
 import os
 
@@ -23,7 +23,7 @@ def verificar_senha(senha_texto:str, senha_hash: str) -> bool:
 
 
 def criar_token_cliente(cliente_id: int, email: str) -> str:
-    expira_em = datetime.utcnow() + timedelta(minutes=EXPIRACAO_MINUTOS)
+    expira_em = datetime.now(UTC) + timedelta(minutes=EXPIRACAO_MINUTOS)
     dados = {"sub": email, "cliente_id": cliente_id, "exp": expira_em}
     return jwt.encode(dados, SECRET_KEY, algorithm=ALGORITHM)
 

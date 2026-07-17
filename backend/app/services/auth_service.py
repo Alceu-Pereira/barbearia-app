@@ -1,6 +1,6 @@
 from passlib.context import CryptContext
 from jose import jwt
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, UTC
 from sqlalchemy.orm import Session
 from backend.app.models.usuario import Usuario
 from backend.app.logger import logger
@@ -24,7 +24,7 @@ def verificar_senha(senha_texto: str, senha_hash: str) -> bool:
     return pwd_context.verify(senha_texto, senha_hash)
 
 def criar_token(email: str) -> str:
-    expira_em = datetime.utcnow() + timedelta(minutes=EXPIRACAO_MINUTOS)
+    expira_em = datetime.now(UTC) + timedelta(minutes=EXPIRACAO_MINUTOS)
     dados = {"sub": email, "exp": expira_em}
     return jwt.encode(dados, SECRET_KEY, algorithm=ALGORITHM)
 
