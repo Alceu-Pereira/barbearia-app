@@ -123,7 +123,7 @@ def atualizar_cliente(db: Session, cliente_id: int, dados: ClienteUpdate):
     if dados.nome is not None:
         cliente.nome = dados.nome
     if dados.telefone is not None:
-        cliente.telefone = dados.telfone
+        cliente.telefone = dados.telefone
 
     db.commit()
     db.refresh(cliente)

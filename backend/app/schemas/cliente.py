@@ -10,7 +10,7 @@ class ClienteCreate(ClienteBase):
 
 class ClienteUpdate(BaseModel):
     nome: str | None = None
-    telfone: str | None = None
+    telefone: str | None = None
 
 
 class ClienteRegistro(BaseModel):
