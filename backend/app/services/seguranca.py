@@ -82,3 +82,4 @@ def usuario_ou_cliente(
 
     except JWTError:
         raise erro_credenciais
+    
