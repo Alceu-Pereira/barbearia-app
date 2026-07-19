@@ -7,9 +7,13 @@ from backend.app.services.cliente_service import (
     listar_clientes,
     buscar_cliente,
     atualizar_cliente,
-    deletar_cliente
+    deletar_cliente,
+    criar_token_cliente,
+    ALGORITHM,
+    SECRET_KEY
 )
 from backend.app.services.auth_service import gerar_hash_senha
+from jose import jwt
 from backend.app.schemas.cliente import ClienteCreate, ClienteUpdate, ClienteRegistro
 
 def make_cliente_fake():
@@ -39,10 +43,11 @@ def test_atualizar_cliente_sucesso():
     db = MagicMock()
     cliente = make_cliente_fake()
     db.query().filter().first.return_value = cliente
-    dados = ClienteUpdate(nome="João Atualizado")
+    dados = ClienteUpdate(nome="João Atualizado", telefone="999999999")
     resultado = atualizar_cliente(db, 1, dados)
 
     assert cliente.nome == "João Atualizado"
+    assert cliente.telefone == "999999999"
     db.commit.assert_called_once()
 
 def test_buscar_cliente_nao_encontrado():
@@ -127,6 +132,21 @@ def test_registrar_cliente_telefone_duplicado():
 
     assert "Este telefone já está cadastrado." in str(erro.value)
 
+def test_criar_cliente_telefone_duplicado():
+    db = MagicMock()
+    cliente = make_cliente_fake()
+    db.query().filter().first.return_value = cliente
+
+    dados = ClienteCreate(
+        nome="João",
+        telefone="999999999"
+    )
+
+    with pytest.raises(ValueError) as erro:
+        criar_cliente(db, dados)
+
+    assert "Já existe um cliente com esse telefone." in str(erro.value)
+
 def test_autenticar_cliente_sucesso():
     cliente_fake = MagicMock()
     cliente_fake.email = "teste@email.com"
@@ -171,3 +191,17 @@ def test_autenticar_cliente_sem_senha_cadastrada():
     resultado = autenticar_cliente(db, "teste@email.com", "senha123")
 
     assert resultado is None
+
+
+def test_criar_token_cliente():
+    id = 1
+    email = "teste@email.com"
+
+    token = criar_token_cliente(id, email)
+
+    assert token is not None
+
+    payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+
+    assert payload["sub"] == email
+    assert payload["cliente_id"] == id
