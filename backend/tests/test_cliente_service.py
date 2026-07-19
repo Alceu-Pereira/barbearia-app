@@ -9,6 +9,7 @@ from backend.app.services.cliente_service import (
     atualizar_cliente,
     deletar_cliente
 )
+from backend.app.services.auth_service import gerar_hash_senha
 from backend.app.schemas.cliente import ClienteCreate, ClienteUpdate, ClienteRegistro
 
 def make_cliente_fake():
@@ -126,5 +127,47 @@ def test_registrar_cliente_telefone_duplicado():
 
     assert "Este telefone já está cadastrado." in str(erro.value)
 
-def test_autenticar_cliente():
-    pass
+def test_autenticar_cliente_sucesso():
+    cliente_fake = MagicMock()
+    cliente_fake.email = "teste@email.com"
+    cliente_fake.senha_hash = gerar_hash_senha("senha123")
+
+    db = MagicMock()
+    db.query().filter().first.return_value = cliente_fake
+
+    resultado = autenticar_cliente(db, "teste@email.com", "senha123")
+
+    assert resultado is not None
+    assert resultado.email == "teste@email.com"
+
+def test_autenticar_cliente_email_nao_encontrado():
+    db = MagicMock()
+    db.query().filter().first.return_value = None
+
+    resultado = autenticar_cliente(db, "naoexiste@email.com", "qualquer senha")
+
+    assert resultado is None
+
+def test_autenticar_cliente_senha_incorreta():
+    cliente_fake = MagicMock()
+    cliente_fake.email = "teste@email.com"
+    cliente_fake.senha_hash = gerar_hash_senha("senha123")
+
+    db = MagicMock()
+    db.query().filter().first.return_value = cliente_fake
+
+    resultado = autenticar_cliente(db, "teste@email.com", "senha errada")
+
+    assert resultado is None
+
+def test_autenticar_cliente_sem_senha_cadastrada():
+    cliente_fake = MagicMock()
+    cliente_fake.email = "teste@email.com"
+    cliente_fake.senha_hash = None
+
+    db = MagicMock()
+    db.query().filter().first.return_value = cliente_fake
+
+    resultado = autenticar_cliente(db, "teste@email.com", "senha123")
+
+    assert resultado is None
