@@ -23,3 +23,15 @@ def test_usuario_atual_token_invalido():
         usuario_atual("token", db)
 
         assert erro.value.status_code == 401
+
+
+def test_usuario_atual_usuario_nao_encontrado():
+    token = criar_token("teste@email.com")
+
+    db = MagicMock()
+    db.query().filter().first.return_value = None
+
+    with pytest.raises(HTTPException) as erro:
+        usuario_atual(token, db)
+
+    assert erro.value.status_code == 401
