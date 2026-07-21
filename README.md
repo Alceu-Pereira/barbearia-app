@@ -1,8 +1,16 @@
-# ✂️ Barbearia App
+# Barbearia App
 
-Sistema de agendamentos para barbearia desenvolvido com Python, FastAPI e PostgreSQL.
+Sistema completo de agendamentos para barbearias, que resolve a dor comum
+de gerenciar horários por WhatsApp, telefone ou papel.
 
-## 🚀 Tecnologias
+Com ele, o dono da barbearia tem uma visão centralizada de todos os
+agendamentos, e o cliente ganha autonomia para marcar, visualizar e
+cancelar seus próprios horários — sem precisar ligar ou mandar mensagem
+para confirmar disponibilidade.
+
+Desenvolvido com Python, FastAPI e PostgreSQL.
+
+## Tecnologias
 
 - **Backend:** Python 3.14 + FastAPI
 - **Banco de Dados:** PostgreSQL 18
@@ -10,14 +18,27 @@ Sistema de agendamentos para barbearia desenvolvido com Python, FastAPI e Postgr
 - **Testes:** Pytest com 100% de cobertura
 - **ORM:** SQLAlchemy
 
-## ✨ Funcionalidades
+## Funcionalidades
 
-- ✅ Criar agendamentos
-- ✅ Listar agendamentos
-- ✅ Cancelar agendamentos
-- ✅ Validação de horários duplicados
-- ✅ Validação de horários passados
-- ✅ Sistema de logs
+### Cliente
+- Criar conta própria
+- Login e autenticação
+- Criar agendamento
+- Cancelar agendamento
+- Visualizar apenas seus próprios agendamentos
+
+### Admin
+- Login administrativo
+- Gerenciar barbeiros (criar, listar, editar, deletar)
+- Gerenciar clientes (criar, listar, editar, deletar)
+- Visualizar todos os agendamentos do sistema
+- Cancelar qualquer agendamento
+
+### Automações do Sistema
+- Logs detalhados de todas as operações
+- Email de confirmação ao criar agendamento
+- Email de cancelamento ao cancelar agendamento
+- Lembrete automático por email, 1 hora antes do horário agendado
 
 ## 🧠 Regras de Negócio
 
