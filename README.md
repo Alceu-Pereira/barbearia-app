@@ -15,8 +15,11 @@ Desenvolvido com Python, FastAPI e PostgreSQL.
 - **Backend:** Python 3.14 + FastAPI
 - **Banco de Dados:** PostgreSQL 18
 - **Frontend:** HTML, CSS e JavaScript
-- **Testes:** Pytest com 100% de cobertura
+- **Testes:** Pytest com cobertura de código (pytest-cov)
 - **ORM:** SQLAlchemy
+- **Autenticação:** JWT (python-jose) + Hash de senha (passlib com bcrypt)
+- **Agendamento de tarefas:** APScheduler (lembretes automáticos)
+- **Deploy:** Render (Backend), Vercel (Frontend), Neon (Banco de dados)
 
 ## Funcionalidades
 
