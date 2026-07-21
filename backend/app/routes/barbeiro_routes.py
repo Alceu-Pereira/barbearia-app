@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from backend.app.database import SessionLocal
 from backend.app.schemas.barbeiro import BarbeiroCreate, BarbeiroUpdate, BarbeiroResponse
 from backend.app.services import barbeiro_service
-from backend.app.services.seguranca import usuario_atual
+from backend.app.services.seguranca import verificar_admin
 from backend.app.models.usuario import Usuario
 from typing import List
 
@@ -38,14 +38,14 @@ def buscar_barbeiro(barbeiro_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail=str(e))
     
 @router.put("/{barbeiro_id}", response_model=BarbeiroResponse)
-def atualizar_barbeiro(barbeiro_id: int, dados: BarbeiroUpdate, db: Session = Depends(get_db), usuario: Usuario = Depends(usuario_atual)):
+def atualizar_barbeiro(barbeiro_id: int, dados: BarbeiroUpdate, db: Session = Depends(get_db), usuario: Usuario = Depends(verificar_admin)):
     try:
         return barbeiro_service.atualizar_barbeiro(db, barbeiro_id, dados)
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
     
 @router.delete("/{barbeiro_id}")
-def deletar_barbeiro(barbeiro_id: int, db: Session = Depends(get_db), usuario: Usuario = Depends(usuario_atual)):
+def deletar_barbeiro(barbeiro_id: int, db: Session = Depends(get_db), usuario: Usuario = Depends(verificar_admin)):
     try:
         return barbeiro_service.deletar_barbeiro(db, barbeiro_id)
     except ValueError as e:

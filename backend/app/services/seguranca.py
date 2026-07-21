@@ -25,7 +25,7 @@ def get_db():
         db.close()
 
 
-def usuario_atual(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+def verificar_admin(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     erro_credenciais = HTTPException(
         status_code=401,
         detail="Não foi possível validar as credenciais."
@@ -41,15 +41,15 @@ def usuario_atual(token: str = Depends(oauth2_scheme), db: Session = Depends(get
     except JWTError:
         raise erro_credenciais
 
-    usuario = db.query(Usuario).filter(Usuario.email == email).first()
+    admin = db.query(Usuario).filter(Usuario.email == email).first()
 
-    if usuario is None:
+    if admin is None:
         raise erro_credenciais
 
-    return usuario
+    return admin
 
 
-def usuario_ou_cliente(
+def admin_ou_cliente(
     token: str = Depends(OAuth2PasswordBearer(tokenUrl="auth/login", auto_error=False)),
     db: Session = Depends(get_db)
 ):
@@ -69,9 +69,9 @@ def usuario_ou_cliente(
             raise erro_credenciais
 
         # Verifica se é admin
-        usuario = db.query(Usuario).filter(Usuario.email == email).first()
-        if usuario:
-            return usuario
+        admin = db.query(Usuario).filter(Usuario.email == email).first()
+        if admin:
+            return admin
 
         # Verifica se é cliente
         cliente = db.query(Cliente).filter(Cliente.email == email).first()

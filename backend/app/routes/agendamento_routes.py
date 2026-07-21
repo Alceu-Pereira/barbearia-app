@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from backend.app.database import SessionLocal
 from backend.app.schemas.agendamento import AgendamentoCreate, AgendamentoResponse
 from backend.app.services import agendamento_service
-from backend.app.services.seguranca import usuario_ou_cliente
+from backend.app.services.seguranca import admin_ou_cliente
 from typing import List
 
 router = APIRouter(
@@ -22,7 +22,7 @@ def get_db():
 def criar_agendamento(
     dados: AgendamentoCreate,
     db: Session = Depends(get_db),
-    usuario = Depends(usuario_ou_cliente)
+    usuario = Depends(admin_ou_cliente)
 ):
     try:
         return agendamento_service.criar_agendamento(db, dados)
@@ -37,7 +37,7 @@ def listar_agendamentos(db: Session = Depends(get_db)):
 def cancelar_agendamento(
     agendamento_id: int,
     db: Session = Depends(get_db),
-    usuario = Depends(usuario_ou_cliente)
+    usuario = Depends(admin_ou_cliente)
 ):
     try:
         return agendamento_service.cancelar_agendamento(db, agendamento_id)

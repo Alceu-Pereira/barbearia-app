@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from backend.app.database import SessionLocal
 from backend.app.schemas.cliente import ClienteCreate, ClienteUpdate, ClienteResponse, ClienteRegistro, ClienteToken
 from backend.app.services import cliente_service
-from backend.app.services.seguranca import usuario_atual
+from backend.app.services.seguranca import verificar_admin
 from backend.app.models.usuario import Usuario
 from typing import List
 
@@ -57,7 +57,7 @@ def meus_agendamentos(cliente_id: int, db: Session = Depends(get_db)):
 def criar_cliente(
     dados: ClienteCreate,
     db: Session = Depends(get_db),
-    usuario: Usuario = Depends(usuario_atual)
+    usuario: Usuario = Depends(verificar_admin)
 ):
     try:
         return cliente_service.criar_cliente(db, dados)
@@ -83,7 +83,7 @@ def atualizar_cliente(
     cliente_id: int,
     dados: ClienteUpdate,
     db: Session = Depends(get_db),
-    usuario: Usuario = Depends(usuario_atual)
+    usuario: Usuario = Depends(verificar_admin)
 ):
     try:
         return cliente_service.atualizar_cliente(db, cliente_id, dados)
@@ -95,7 +95,7 @@ def atualizar_cliente(
 def deletar_cliente(
     cliente_id: int,
     db: Session = Depends(get_db),
-    usuario: Usuario = Depends(usuario_atual)
+    usuario: Usuario = Depends(verificar_admin)
 ):
     try:
         return cliente_service.deletar_cliente(db, cliente_id)
