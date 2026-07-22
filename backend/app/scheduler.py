@@ -1,7 +1,7 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime, timedelta
 from backend.app.database import SessionLocal
-from backend.app.models.agendamentos import Agendamentos
+from backend.app.models.agendamento import Agendamento
 from backend.app.models.barbeiro import Barbeiro
 from backend.app.models.cliente import Cliente
 from backend.app.services.email_service import email_lembrete_agendamento
@@ -22,10 +22,10 @@ def verificar_lembretes():
 
         logger.info(f"Janela de verificacao: {inicio_janela} ate {fim_janela}")
 
-        agendamentos = db.query(Agendamentos).filter(
-            Agendamentos.status == "confirmado",
-            Agendamentos.data_hora >= inicio_janela,
-            Agendamentos.data_hora <= fim_janela
+        agendamentos = db.query(Agendamento).filter(
+            Agendamento.status == "confirmado",
+            Agendamento.data_hora >= inicio_janela,
+            Agendamento.data_hora <= fim_janela
         ).all()
 
         logger.info(f"Agendamentos encontrados na janela: {len(agendamentos)}")

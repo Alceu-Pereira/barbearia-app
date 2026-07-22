@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from backend.app.database import engine, Base
-from backend.app.models import barbeiro, cliente, agendamentos, usuario
+from backend.app.models import agendamento, barbeiro, cliente, usuario
 from backend.app.routes import agendamento_routes, auth_routes, barbeiro_routes, cliente_routes
 from backend.app.logger import logger
 from backend.app.scheduler import iniciar_scheduler

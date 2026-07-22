@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from datetime import datetime
-from backend.app.models.agendamentos import Agendamentos
+from backend.app.models.agendamento import Agendamento
 from backend.app.models.barbeiro import Barbeiro
 from backend.app.models.cliente import Cliente
 from backend.app.schemas.agendamento import AgendamentoCreate
@@ -21,10 +21,10 @@ def criar_agendamento(db: Session, dados: AgendamentoCreate):
         raise ValueError("Não é possível agendar em um horário que já passou.")
 
     # Regra 2: Não pode agendar no mesmo horário com o mesmo barbeiro
-    agendamento_existente = db.query(Agendamentos).filter(
-        Agendamentos.barbeiro_id == dados.barbeiro_id,
-        Agendamentos.data_hora == dados.data_hora,
-        Agendamentos.status == "confirmado"
+    agendamento_existente = db.query(Agendamento).filter(
+        Agendamento.barbeiro_id == dados.barbeiro_id,
+        Agendamento.data_hora == dados.data_hora,
+        Agendamento.status == "confirmado"
     ).first()
 
     if agendamento_existente:
@@ -32,7 +32,7 @@ def criar_agendamento(db: Session, dados: AgendamentoCreate):
         raise ValueError("Este barbeiro já possui um agendamento neste horário.")
 
     # Tudo certo — cria o agendamento
-    novo_agendamento = Agendamentos(
+    novo_agendamento = Agendamento(
         barbeiro_id=dados.barbeiro_id,
         cliente_id=dados.cliente_id,
         data_hora=dados.data_hora,
@@ -68,14 +68,14 @@ def criar_agendamento(db: Session, dados: AgendamentoCreate):
 
 def listar_agendamentos(db: Session):
     logger.info("Listando todos os agendamentos")
-    return db.query(Agendamentos).all()
+    return db.query(Agendamento).all()
 
 
 def cancelar_agendamento(db: Session, agendamento_id: int):
     logger.info(f"Tentativa de cancelar agendamento - id: {agendamento_id}")
 
-    agendamento = db.query(Agendamentos).filter(
-        Agendamentos.id == agendamento_id
+    agendamento = db.query(Agendamento).filter(
+        Agendamento.id == agendamento_id
     ).first()
 
     # Regra 3: Agendamento deve existir

@@ -7,7 +7,7 @@ from backend.app.services.agendamento_service import (
     cancelar_agendamento
 )
 from backend.app.schemas.agendamento import AgendamentoCreate
-from backend.app.models import barbeiro, cliente, agendamentos
+from backend.app.models import agendamento, barbeiro, cliente
 
 # FÁBRICA DE DADOS FALSOS
 def make_dados(horas_futuras=24):
