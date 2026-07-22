@@ -43,7 +43,7 @@ Desenvolvido com Python, FastAPI e PostgreSQL.
 - Email de cancelamento ao cancelar agendamento
 - Lembrete automático por email, 1 hora antes do horário agendado
 
-## 🧠 Regras de Negócio
+## Regras de Negócio
 
 - Não é possível agendar em horário passado
 - Não é possível agendar o mesmo barbeiro no mesmo horário
@@ -96,8 +96,49 @@ barbearia-app/
     └── admin.js                   # Lógica do painel admin
 ```
 
+## Rotas da API
 
-## ⚙️ Como rodar localmente
+>A documentação completa e interativa de todas as rotas está disponível
+>via Swagger, gerado automaticamente pelo FastAPI, em `/docs`.
+
+### Autenticação
+
+| Método | Rota | Descrição |
+|---|---|---|
+| POST | `/auth/cadastro` | Cadastro de administrador |
+| POST | `/auth/login` | Login do administrador |
+| POST | `/clientes/registro` | Cliente cria sua própria conta |
+| POST | `/clientes/login` | Login do cliente |
+
+### Clientes
+
+| Método | Rota | Descrição |
+|---|---|---|
+| GET | `/clientes/` | Lista todos os clientes |
+| GET | `/clientes/{cliente_id}` | Busca um cliente específico |
+| PUT | `/clientes/{cliente_id}` | Atualiza dados de um cliente |
+| DELETE | `/clientes/{cliente_id}` | Remove um cliente |
+| GET | `/clientes/meus-agendamentos/{cliente_id}` | Lista os agendamentos de um cliente |
+
+### Barbeiros
+
+| Método | Rota | Descrição |
+|---|---|---|
+| POST | `/barbeiros/` | Cria um barbeiro |
+| GET | `/barbeiros/` | Lista todos os barbeiros |
+| GET | `/barbeiros/{barbeiro_id}` | Busca um barbeiro específico |
+| PUT | `/barbeiros/{barbeiro_id}` | Atualiza um barbeiro específico |
+| DELETE | `/barbeiros/{barbeiro_id}` | Deleta um barbeiro específico |
+
+### Agendamentos
+
+| Método | Rota | Descrição |
+|---|---|---|
+| POST | `/agendamentos/` | Cria um agendamento |
+| GET | `/agendamentos/` | Lista todos os agendamentos |
+| PATCH | `/agendamentos/{agendamento_id}/cancelar` | Cancela um agendamento específico |
+
+## Como rodar localmente
 
 **1. Clone o repositório**
 ```bash
@@ -129,12 +170,12 @@ uvicorn backend.main:app --reload
 - Frontend: abra o arquivo `frontend/index.html` no navegador
 - API Docs: http://127.0.0.1:8000/docs
 
-## 🧪 Rodando os testes
+## Rodando os testes
 
 ```bash
 pytest --cov=backend/app/services --cov-report=term-missing
 ```
 
-## 👨‍💻 Autor
+## Autor
 
 Desenvolvido por **Alceu Pereira**
