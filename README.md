@@ -49,37 +49,53 @@ Desenvolvido com Python, FastAPI e PostgreSQL.
 - Não é possível agendar o mesmo barbeiro no mesmo horário
 - Não é possível cancelar um agendamento já cancelado
 
-## 📁 Estrutura do Projeto
+## Estrutura do Projeto
 
-arbearia-app/
-
+```
+barbearia-app/
 ├── backend/
-
 │   ├── app/
-
-│   │   ├── models/        # Modelos do banco de dados
-
-│   │   ├── routes/        # Endpoints da API
-
-│   │   ├── schemas/       # Validação de dados
-
-│   │   ├── services/      # Regras de negócio
-
-│   │   ├── database.py    # Conexão com banco
-
-│   │   └── logger.py      # Sistema de logs
-
-│   ├── tests/             # Testes unitários
-
-│   └── main.py            # Ponto de entrada
-
+│   │   ├── models/
+│   │   │   ├── agendamento.py    # Model de Agendamento
+│   │   │   ├── barbeiro.py       # Model de Barbeiro
+│   │   │   ├── cliente.py        # Model de Cliente
+│   │   │   └── usuario.py        # Model de Usuario (admin)
+│   │   ├── routes/
+│   │   │   ├── agendamento_routes.py
+│   │   │   ├── auth_routes.py
+│   │   │   ├── barbeiro_routes.py
+│   │   │   └── cliente_routes.py
+│   │   ├── schemas/
+│   │   │   ├── agendamento.py
+│   │   │   ├── barbeiro.py
+│   │   │   ├── cliente.py
+│   │   │   └── usuario.py
+│   │   ├── services/
+│   │   │   ├── agendamento_service.py
+│   │   │   ├── auth_service.py
+│   │   │   ├── barbeiro_service.py
+│   │   │   ├── cliente_service.py
+│   │   │   ├── email_service.py
+│   │   │   └── seguranca.py
+│   │   ├── database.py           # Conexão com o banco de dados
+│   │   ├── logger.py              # Sistema de logs
+│   │   └── scheduler.py           # Agendamento automático de lembretes
+│   ├── tests/
+│   │   ├── test_agendamento_service.py
+│   │   ├── test_auth_service.py
+│   │   ├── test_barbeiro_service.py
+│   │   ├── test_cliente_service.py
+│   │   └── test_seguranca.py
+│   └── main.py                    # Ponto de entrada da aplicação
 └── frontend/
+    ├── index.html                 # Login/registro + agendamentos do cliente
+    ├── admin.html                 # Painel administrativo
+    ├── style.css                  # Estilos da área do cliente
+    ├── admin.css                  # Estilos do painel admin
+    ├── app.js                     # Lógica da área do cliente
+    └── admin.js                   # Lógica do painel admin
+```
 
-├── index.html
-
-├── style.css
-
-└── app.js
 
 ## ⚙️ Como rodar localmente
 

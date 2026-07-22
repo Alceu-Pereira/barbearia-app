@@ -46,7 +46,7 @@ def login_cliente(form: OAuth2PasswordRequestForm = Depends(), db: Session = Dep
 
 @router.get("/meus-agendamentos/{cliente_id}")
 def meus_agendamentos(cliente_id: int, db: Session = Depends(get_db)):
-    from backend.app.models.agendamentos import Agendamento
+    from backend.app.models.agendamento import Agendamento
     agendamentos = db.query(Agendamento).filter(
         Agendamento.cliente_id == cliente_id
     ).all()
