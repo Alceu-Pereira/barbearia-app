@@ -37,4 +37,13 @@ class ClienteToken(BaseModel):
     cliente_id: int
     nome: str
 
-    
+
+class ClientePerfilUpdate(BaseModel):
+    nome: str | None = None
+    telefone: str | None = None
+    email: EmailStr | None = None
+
+
+class ClienteTrocarSenha(BaseModel):
+    senha_atual: str
+    senha_nova: str

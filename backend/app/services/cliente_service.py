@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from backend.app.models.cliente import Cliente
-from backend.app.schemas.cliente import ClienteCreate, ClienteUpdate, ClienteRegistro
+from backend.app.schemas.cliente import ClienteCreate, ClienteUpdate, ClienteRegistro, ClientePerfilUpdate, ClienteTrocarSenha
 from backend.app.logger import logger
 from passlib.context import CryptContext
 from jose import jwt
@@ -145,3 +145,35 @@ def deletar_cliente(db: Session, cliente_id: int):
     return {"mensagem": "Cliente deletado com sucesso."}
 
 
+def atualizar_meu_perfil(db: Session, cliente: Cliente, dados: ClientePerfilUpdate):
+    if dados.email is not None and dados.email != cliente.email:
+        email_existente = db.query(Cliente).filter(Cliente.email == dados.email).first()
+        if email_existente:
+            raise ValueError("Este email já está cadastrado.")
+        cliente.email = dados.email
+
+    if dados.nome is not None:
+        cliente.nome = dados.nome
+
+    if dados.telefone is not None and dados.telefone != cliente.telefone:
+        telefone_existente = db.query(Cliente).filter(Cliente.telefone == dados.telefone).first()
+        if telefone_existente:
+            raise ValueError("Este telefone já está cadastrado.")
+        cliente.telefone = dados.telefone
+
+    db.commit()
+    db.refresh(cliente)
+
+    return cliente
+
+def trocar_senha(db: Session, cliente: Cliente, dados: ClienteTrocarSenha):
+    if not verificar_senha(dados.senha_atual, cliente.senha_hash):
+        raise ValueError("Senha atual incorreta.")
+
+    cliente.senha_hash = gerar_hash_senha(dados.senha_nova)
+
+    db.commit()
+    db.refresh(cliente)
+
+    return cliente
+    

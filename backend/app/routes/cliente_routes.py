@@ -2,9 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from backend.app.database import SessionLocal
-from backend.app.schemas.cliente import ClienteCreate, ClienteUpdate, ClienteResponse, ClienteRegistro, ClienteToken
+from backend.app.schemas.cliente import ClienteCreate, ClienteUpdate, ClienteResponse, ClienteRegistro, ClienteToken, ClienteTrocarSenha, ClientePerfilUpdate
 from backend.app.services import cliente_service
-from backend.app.services.seguranca import verificar_admin
+from backend.app.services.seguranca import verificar_admin, admin_ou_cliente
 from backend.app.models.usuario import Usuario
 from typing import List
 
@@ -103,3 +103,20 @@ def deletar_cliente(
         raise HTTPException(status_code=404, detail=str(e))
     
 
+@router.put("/meu-perfil", response_model=ClienteResponse)
+def atualizar_meu_perfil(dados: ClientePerfilUpdate,
+                         db: Session = Depends(get_db),
+                         cliente = Depends(admin_ou_cliente)):
+    try:
+        return cliente_service.atualizar_meu_perfil(db, cliente, dados)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@router.put("/trocar-senha", response_model=ClienteResponse)
+def trocar_minha_senha(dados: ClienteTrocarSenha,
+                 db: Session = Depends(get_db),
+                 cliente = Depends(admin_ou_cliente)):
+    try:
+        return cliente_service.trocar_senha(db, cliente, dados)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
